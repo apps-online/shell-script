@@ -3,8 +3,9 @@
 read -p "User: " user
 #read -p "Token: " token
 current_dir=$(pwd)
-mkdir /tmp/github
-cd /tmp/github
+directory="github-$user-$(date +'%Y-%m-%d')"
+mkdir "/tmp/$directory"
+cd "/tmp/$directory"
 #repos=$(curl -s https://api.github.com/users/$user/repos&access_token=$token | jq -r '.[]|.html_url')
 repos=$(curl -s https://api.github.com/users/$user/repos | jq -r '.[]|.html_url')
 ext=".git"
@@ -12,9 +13,9 @@ for repo in ${repos[@]}; do
 git clone $repo$ext
 done
 cd /tmp
-tar -cvf github.tar github
-rm -rf github
+tar -cvf "$directory.tar" $directory
+rm -rf $directory
 cd $current_dir
-mv /tmp/github.tar github.tar
+mv "/tmp/$directory.tar" "$directory.tar"
 clear
 echo '========== Done! =========='
