@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
-#read -p "User: " user
-read -p "Token: " token
 current_dir=$(pwd)
-directory="github-$user-$(date +'%Y-%m-%d')"
+directory="github-$(date +'%Y-%m-%d')"
 mkdir "/tmp/$directory"
 cd "/tmp/$directory"
+
+read -p "Token: " token
 repos=$(curl -H "Authorization: token $token" https://api.github.com/user/repos | jq -r '.[]|.html_url')
+#read -p "User: " user
 #repos=$(curl -s https://api.github.com/users/$user/repos | jq -r '.[]|.html_url')
+
 ext=".git"
 for repo in ${repos[@]}; do
 git clone $repo$ext
