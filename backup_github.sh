@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-read -p "User: " user
+#read -p "User: " user
 read -p "Token: " token
 current_dir=$(pwd)
 directory="github-$user-$(date +'%Y-%m-%d')"
